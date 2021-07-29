@@ -202,11 +202,11 @@ async def create_poll(client, message):
     if not poll_:
         await msg.edit(engine.get_string("REQ_POLL"))
         return
-    if not "|" in poll_:
+    if "|" not in poll_:
         await msg.edit(engine.get_string("A_POLL_NEEDS"))
         return
     poll_q, poll_options = poll_.split("|")
-    if not "," in poll_options:
+    if "," not in poll_options:
         await msg.edit(engine.get_string("A_POLL_NEEDS"))
         return
     option_s = poll_options.split(",")
@@ -224,10 +224,7 @@ async def create_poll(client, message):
 async def dumb_er(client, message):
     engine = message.Engine
     ow = await edit_or_reply(message, engine.get_string("PROCESSING"))
-    if message.reply_to_message:
-        m_sg = message.reply_to_message
-    else:
-        m_sg = message
+    m_sg = message.reply_to_message or message
     owo = f"{m_sg}"
     await edit_or_send_as_file(owo, ow, client, "Json-Dump", "Dump", "md")
 

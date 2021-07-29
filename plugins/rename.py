@@ -43,9 +43,7 @@ async def rename(client, message):
             fuck = file_name.rpartition(".")[-1]
             fname = fname + "." + fuck
     EsCoBaR = await message.reply_to_message.download(fname)
-    caption = ""
-    if message.reply_to_message.caption:
-        caption = message.reply_to_message.caption
+    caption = message.reply_to_message.caption or ""
     c_time = time.time()
     await client.send_document(
         message.chat.id,

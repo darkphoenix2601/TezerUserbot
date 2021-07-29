@@ -72,9 +72,18 @@ async def welcomenibba(client, message):
     
     
 async def is_media(message):
-    if not (message.photo or message.video or message.document or message.audio or message.sticker or message.animation or message.voice or message.video_note):
-        return False
-    return True
+    return bool(
+        (
+            message.photo
+            or message.video
+            or message.document
+            or message.audio
+            or message.sticker
+            or message.animation
+            or message.voice
+            or message.video_note
+        )
+    )
 
 
 @friday_on_cmd(

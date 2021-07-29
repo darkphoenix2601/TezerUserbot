@@ -52,7 +52,7 @@ async def telegrapher(client, message):
         os.remove(m_d)
     elif message.reply_to_message.text:
         # Assuming its text
-        page_title = get_text(message) if get_text(message) else client.me.first_name
+        page_title = get_text(message) or client.me.first_name
         page_text = message.reply_to_message.text
         page_text = page_text.replace("\n", "<br>")
         try:

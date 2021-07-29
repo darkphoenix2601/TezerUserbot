@@ -222,13 +222,12 @@ def add_help_menu(
             CMD_LIST[
                 file_name
             ] += f"\n\n**Command :** `{Config.COMMAND_HANDLER}{cmd}` \n**Help :** `{cmd_help}` \n**Example :** `{cmd_helpz}`"
+    elif file_name not in XTRA_CMD_LIST.keys():
+        XTRA_CMD_LIST[file_name] = cmd_helper
     else:
-        if file_name not in XTRA_CMD_LIST.keys():
-            XTRA_CMD_LIST[file_name] = cmd_helper
-        else:
-            XTRA_CMD_LIST[
-                file_name
-            ] += f"\n\n**Command :** `{Config.COMMAND_HANDLER}{cmd}` \n**Help :** `{cmd_help}` \n**Example :** `{cmd_helpz}`"
+        XTRA_CMD_LIST[
+            file_name
+        ] += f"\n\n**Command :** `{Config.COMMAND_HANDLER}{cmd}` \n**Help :** `{cmd_help}` \n**Example :** `{cmd_helpz}`"
             
 
 def add_handler(filter_s, func_, cmd):

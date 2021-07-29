@@ -95,11 +95,10 @@ async def packinfo(client, message):
     emoji = "😁"
     try:
         Hell = Hell.strip()
-        if not Hell.isalpha():
-            if not Hell.isnumeric():
-                emoji = Hell
-        else:
+        if Hell.isalpha():
             emoji = "😁"
+        elif not Hell.isnumeric():
+            emoji = Hell
     except:
         emoji = "😁"
     exist = None
@@ -210,7 +209,6 @@ async def packinfo(client, message):
 
 def resize_image(image):
     im = Image.open(image)
-    maxsize = (512, 512)
     if (im.width and im.height) < 512:
         size1 = im.width
         size2 = im.height
@@ -227,6 +225,7 @@ def resize_image(image):
         sizenew = (size1new, size2new)
         im = im.resize(sizenew)
     else:
+        maxsize = (512, 512)
         im.thumbnail(maxsize)
     file_name = "Sticker_TezerUB.png"
     im.save(file_name, "PNG")

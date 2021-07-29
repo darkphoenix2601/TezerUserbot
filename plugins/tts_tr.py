@@ -24,7 +24,6 @@ def tr(text, lang):
     translator = google_translator()
     if not LANGUAGES.get(lang):
         return None, None, None
-        return
     translated = translator.translate(text, dest=lang, src='auto')
     source_lan = LANGUAGES.get(translated.src.lower())
     transl_lan = LANGUAGES.get(translated.dest.lower())

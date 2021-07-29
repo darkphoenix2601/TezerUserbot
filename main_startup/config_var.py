@@ -36,7 +36,7 @@ def fetch_heroku_git_url(api_key, app_name):
     return heroku_app.git_url.replace("https://", "https://api:" + api_key + "@")
 
 
-class Config(object):
+class Config((object)):
     API_ID = int(os.environ.get("API_ID", 1))
     API_HASH = os.environ.get("API_HASH", None)
     BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
@@ -54,7 +54,7 @@ class Config(object):
     MONGO_DB = os.environ.get("MONGO_DB", None)
     LOG_GRP = int(os.environ.get("LOG_GRP", False))
     COMMAND_HANDLER = os.environ.get("COMMAND_HANDLER", ".")
-    SUDO_USERS = set(int(x) for x in os.environ.get("SUDO_USERS", "").split())
+    SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
     AFS = list(SUDO_USERS)
     CUSTOM_HELP_EMOJI = os.environ.get("CUSTOM_HELP_EMOJI", "✘")
     HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)

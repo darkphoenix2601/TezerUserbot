@@ -142,11 +142,10 @@ async def momify(client, message):
         second_txt = stark[1]
         top_text = first_txt
         bottom_text = second_txt
-        generate_meme(img, top_text=top_text, bottom_text=bottom_text)
     else:
         top_text = hmm
         bottom_text = ""
-        generate_meme(img, top_text=top_text, bottom_text=bottom_text)
+    generate_meme(img, top_text=top_text, bottom_text=bottom_text)
     imgpath = "memeimg.webp"
     if message.reply_to_message:
         await client.send_sticker(
@@ -599,15 +598,12 @@ async def spin(client, message):
     if int(lolshit) > 6:
         await pablo.edit("`Only Speed from 1-6 Is Allowded !`")
         return
-    keke = str(lolshit)
     if not message.reply_to_message:
         await pablo.edit(engine.get_string("NEEDS_REPLY").format("A Valid Media"))
         return
     else:
-        if lolshit:
-            step = lmaodict.get(keke)
-        else:
-            step = 1
+        keke = str(lolshit)
+        step = lmaodict.get(keke) if lolshit else 1
     pic_loc = await convert_to_image(message, client)
     if not pic_loc:
         await pablo.edit(engine.get_string("NEEDS_REPLY").format("A Valid Media"))

@@ -53,9 +53,7 @@ async def show_filters(client, message):
     if poppy is False:
         await pablo.edit(engine.get_string("FILTER_3").format("Filters"))
         return
-    kk = ""
-    for Escobar in poppy:
-        kk += f"\n > `{Escobar.get('keyword')}`"
+    kk = "".join(f"\n > `{Escobar.get('keyword')}`" for Escobar in poppy)
     mag = engine.get_string("LIST_OF").format("Filters", message.chat.title, kk)
     await pablo.edit(mag)
 
@@ -90,15 +88,13 @@ async def reply_filter_(client, message):
     if not message:
         return
     owo = message.text or message.caption
-    al_fill = []
     is_m = False
     if not owo:
         return
     al_fil = await all_filters(int(message.chat.id))
     if not al_fil:
         return
-    for all_fil in al_fil:
-        al_fill.append(all_fil.get("keyword"))
+    al_fill = [all_fil.get("keyword") for all_fil in al_fil]
     owo = owo.lower()
     for filter_s in al_fill:
         pattern = r"( |^|[^\w])" + re.escape(filter_s) + r"( |$|[^\w])"
@@ -130,9 +126,18 @@ async def reply_filter_(client, message):
         )
 
 async def is_media(message):
-    if not (message.photo or message.video or message.document or message.audio or message.sticker or message.animation or message.voice or message.video_note):
-        return False
-    return True
+    return bool(
+        (
+            message.photo
+            or message.video
+            or message.document
+            or message.audio
+            or message.sticker
+            or message.animation
+            or message.voice
+            or message.video_note
+        )
+    )
 
 @Tezer_on_cmd(
     ["delfilters"],

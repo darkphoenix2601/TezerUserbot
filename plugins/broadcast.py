@@ -32,12 +32,12 @@ async def badd(client, message):
     if not bd:
         await pablo.edit(engine.get_string("INPUT_REQ").format("Chat ID"))
         return
-    sed = 0
-    oks = 0
-    zxz = ["channel", "supergroup"]
-    nd = ["creator", "administrator"]
     if bd.lower() == "all":
         await pablo.edit(engine.get_string("BROADCAST_2"))
+        sed = 0
+        oks = 0
+        zxz = ["channel", "supergroup"]
+        nd = ["creator", "administrator"]
         async for dialog in client.iter_dialogs():
             if dialog.chat.type in zxz:
                 x = await client.get_chat_member(dialog.chat.id, message.from_user.id)
@@ -74,13 +74,13 @@ async def brm(client, message):
     engine = message.Engine
     pablo = await edit_or_reply(message, "`Processing..`")
     bd = get_text(message)
-    Jill = 0
     if not bd:
         await pablo.edit(engine.get_string("INPUT_REQ").format("Chat ID"))
         return
     if bd.lower() == "all":
         await pablo.edit(engine.get_string(""))
         all = await get_all_broadcast_chats()
+        Jill = 0
         for chnnl in all:
             await rmbroadcast_chat(chnnl["chat_id"])
             Jill += 1

@@ -292,9 +292,18 @@ async def set_my_pic(client, message):
     await ms_.edit(engine.get_string("SET_DONE_IMAGE"))
 
 async def is_media(message):
-    if not (message.photo or message.video or message.document or message.audio or message.sticker or message.animation or message.voice or message.video_note):
-        return False
-    return True
+    return bool(
+        (
+            message.photo
+            or message.video
+            or message.document
+            or message.audio
+            or message.sticker
+            or message.animation
+            or message.voice
+            or message.video_note
+        )
+    )
 
 @listen(filters.incoming & filters.private & ~filters.edited & ~filters.me & ~filters.service)
 async def pmPermit(client, message):

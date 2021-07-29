@@ -68,7 +68,7 @@ BRANCH_ = Config.U_BRANCH
 async def owo(client, inline_query):
     string_given = inline_query.query.lower()
     if string_given.startswith("not4u"):
-        if not ";" in string_given:
+        if ";" not in string_given:
             return
         ok = string_given.split(" ", maxsplit=1)[1]
         user, msg = ok.split(";")
@@ -194,7 +194,7 @@ async def owo(client, inline_query):
              )
         await client.answer_inline_query(inline_query.id, cache_time=0, results=results)
     elif string_given.startswith("whisper"):
-        if not ";" in string_given:
+        if ";" not in string_given:
             return
         ok = string_given.split(" ", maxsplit=1)[1]
         user, msg = ok.split(";")
@@ -290,9 +290,16 @@ async def st_lang(client, cb):
 @cb_wrapper
 async def change_lang(client, cb):
     nice_text = "Select A Language From Below :"
-    bttns_d = []
-    for lang_ in language_string.keys():
-        bttns_d.append([InlineKeyboardButton(text=LANGUAGES[lang_].title(), callback_data=f"set_lang_{lang_}")])
+    bttns_d = [
+        [
+            InlineKeyboardButton(
+                text=LANGUAGES[lang_].title(),
+                callback_data=f"set_lang_{lang_}",
+            )
+        ]
+        for lang_ in language_string.keys()
+    ]
+
     await cb.edit_message_text(nice_text, reply_markup=InlineKeyboardMarkup(bttns_d))
     
 
@@ -568,10 +575,8 @@ async def fuck_arch_btw(client, cb):
 @bot.on_callback_query(filters.regex(pattern="make_basic_button_(True|False)"))
 @cb_wrapper
 async def wow_nice(client, cb):
-    nice = True
-    if cb.matches[0].group(1) == "False":
-        nice = False
-    if nice is False:
+    nice = cb.matches[0].group(1) != "False"
+    if not nice:
         v_t = XTRA_CMD_LIST
         bttn = paginate_help(0, XTRA_CMD_LIST, "helpme", is_official=nice)
     else:
@@ -593,9 +598,7 @@ async def close_it_please(client, cb):
 @cb_wrapper
 async def get_back_vro(client, cb):
     page_number = int(cb.matches[0].group(1))
-    is_official = True
-    if cb.matches[0].group(2) == "False":
-        is_official = False
+    is_official = cb.matches[0].group(2) != "False"
     cmd_list = CMD_LIST if is_official else XTRA_CMD_LIST
     buttons = paginate_help(page_number, cmd_list, "helpme", is_official=is_official)
     nice_text = f"**TezerUserBot Commands & Help Menu!** \n\n**Tezer Version :** __{friday_version}__ \n**PyroGram Version :** __{__version__}__ \n**Total Plugins Loaded :** __{len(CMD_LIST)}__"
@@ -606,9 +609,7 @@ async def get_back_vro(client, cb):
 @cb_wrapper
 async def give_plugin_cmds(client, cb):
     plugin_name, page_number = cb.matches[0].group(1).split("|", 1)
-    is_official = True
-    if cb.matches[0].group(2) == "False":
-        is_official = False
+    is_official = cb.matches[0].group(2) != "False"
     cmd_list = CMD_LIST if is_official else XTRA_CMD_LIST
     help_string = f"**💡 PLUGIN NAME 💡 :** `{plugin_name}` \n{cmd_list[plugin_name]}"
     help_string += "\n\n**(C) @TEZEROT** ".format(plugin_name)
@@ -631,9 +632,7 @@ async def give_plugin_cmds(client, cb):
 @cb_wrapper
 async def give_next_page(client, cb):
     current_page_number = int(cb.matches[0].group(1))
-    is_official = True
-    if cb.matches[0].group(2) == "False":
-        is_official = False
+    is_official = cb.matches[0].group(2) != "False"
     cmd_list = CMD_LIST if is_official else XTRA_CMD_LIST
     buttons = paginate_help(
         current_page_number + 1, cmd_list, "helpme", is_official=is_official
@@ -645,9 +644,7 @@ async def give_next_page(client, cb):
 @cb_wrapper
 async def give_old_page(client, cb):
     current_page_number = int(cb.matches[0].group(1))
-    is_official = True
-    if cb.matches[0].group(2) == "False":
-        is_official = False
+    is_official = cb.matches[0].group(2) != "False"
     cmd_list = CMD_LIST if is_official else XTRA_CMD_LIST
     buttons = paginate_help(
         current_page_number - 1, cmd_list, "helpme", is_official=is_official

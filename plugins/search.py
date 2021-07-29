@@ -82,8 +82,10 @@ async def grs(client, message):
     for x in to_remove:
         del titles[x]
         del descriptions[x]
-    msg = ""
+    msg = "".join(
+        f"[{tt}]({liek})\n`{d}`\n\n"
+        for tt, liek, d in zip(titles, clean_links, descriptions)
+    )
 
-    for tt, liek, d in zip(titles, clean_links, descriptions):
-        msg += f"[{tt}]({liek})\n`{d}`\n\n"
+
     await pablo.edit("**Search Query:**\n`" + query + "`\n\n**Results:**\n" + msg)

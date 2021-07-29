@@ -98,7 +98,7 @@ async def dpins(client, message):
 async def midhunadmin(client, message):
     engine = message.Engine
     mentions = ""
-    starky = get_text(message) if get_text(message) else message.chat.id
+    starky = get_text(message) or message.chat.id
     pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     try:
         X = await client.get_chat_members(starky, filter="administrators")
@@ -111,7 +111,7 @@ async def midhunadmin(client, message):
             link = f'✱ <a href="tg://user?id={midhun.user.id}">{midhun.user.first_name}</a>'
             userid = f"<code>{midhun.user.id}</code>"
             mentions += f"\n{link} {userid}"
-    holy = ujwal.username if ujwal.username else ujwal.id
+    holy = ujwal.username or ujwal.id
     messag = f"""
 <b>Admins in {ujwal.title} | {holy}</b>
 
@@ -135,16 +135,14 @@ async def midhunadmin(client, message):
 async def bothub(client, message):
     engine = message.Engine
     buts = "**Bot List** \n\n"
-    nos = 0
-    starky = get_text(message) if get_text(message) else message.chat.id
+    starky = get_text(message) or message.chat.id
     pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     try:
         bots = await client.get_chat_members(starky, filter="bots")
     except BaseException as e:
         await pablo.edit(engine.get_string("CANT_FETCH_ADMIN").format("Bots", e))
         return
-    for ujwal in bots:
-        nos += 1
+    for nos, ujwal in enumerate(bots, start=1):
         buts += f"{nos}〉 [{ujwal.user.first_name}](tg://user?id={ujwal.user.id}) \n"
     await pablo.edit(buts)
 

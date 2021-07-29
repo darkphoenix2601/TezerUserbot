@@ -41,10 +41,7 @@ async def chnnlzip(client, message):
     media_count = 0
     text_count = 0
     os.makedirs(dirz)
-    if un:
-        chnnl = un
-    else:
-        chnnl = message.chat.id
+    chnnl = un or message.chat.id
     async for msg in client.iter_history(chnnl):
         if msg.sticker:
             rndmname = uuid.uuid4().hex
@@ -134,10 +131,7 @@ async def chnnlpdf(client, message):
     dirz = f"./{rndm}/"
     photo_count = 0
     os.makedirs(dirz)
-    if un:
-        chnnl = un
-    else:
-        chnnl = message.chat.id
+    chnnl = un or message.chat.id
     images_path = []
     async for msg in client.iter_history(chnnl):
         if msg.photo:
@@ -237,9 +231,7 @@ async def upload(client, message):
         await pablo.edit(engine.get_string("F_404"))
         return
     file_name = os.path.basename(file)
-    send_as_thumb = False
-    if os.path.exists("./main_startup/Cache/thumb.jpg"):
-        send_as_thumb = True
+    send_as_thumb = bool(os.path.exists("./main_startup/Cache/thumb.jpg"))
     size = os.stat(file).st_size
     if file.endswith(image_ext):
         # assume its image file

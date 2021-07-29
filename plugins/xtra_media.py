@@ -58,9 +58,8 @@ async def lgo(client, message):
         await pablo.edit(engine.get_string("NEEDS_REPLY").format("Animated Sticker"))
         os.remove("tgs.tgs")
         return
-    json = open("json.json", "r")
-    jsn = json.read()
-    json.close()
+    with open("json.json", "r") as json:
+        jsn = json.read()
     jsn = (
         jsn.replace("[1]", "[2]")
         .replace("[2]", "[3]")
@@ -95,9 +94,8 @@ def download_imgs_from_google(query: str, lim: int):
 def rm_multiple_files(path_: list):
     path_ = list(path_)
     for i in path_:
-        if os.path.exists(i):
-            if os.path.isfile(i):
-                os.remove(i)
+        if os.path.exists(i) and os.path.isfile(i):
+            os.remove(i)
 
 @run_in_exc
 def get_img_search_result(imoge: str):
@@ -117,8 +115,7 @@ def get_img_search_result(imoge: str):
         os.remove(name)
     if response.status_code == 400:
         return None
-    fetchUrl = response.headers["Location"]
-    return fetchUrl
+    return response.headers["Location"]
 
 @friday_on_cmd(
     ["reverse"],
@@ -147,12 +144,11 @@ async def reverseing(client, message):
         await pablo.edit(engine.get_string("IMG_NOT_FOUND").format("google"))
         return
     await pablo.edit(f"[{guess}]({fetchUrl})\n\n[Visually similar images]({imgspage})")
-    if input_:
-        if input_.isdigit():
-            lim = int(input_)
-            lst, Beast = await download_imgs_from_google(quess, lim)
-            await client.send_media_group(message.chat.id, media=Beast)
-            await rm_multiple_files(Beast)
+    if input_ and input_.isdigit():
+        lim = int(input_)
+        lst, Beast = await download_imgs_from_google(quess, lim)
+        await client.send_media_group(message.chat.id, media=Beast)
+        await rm_multiple_files(Beast)
 @run_in_exc
 def ParseSauce(googleurl):
     """Parse/Scrape the HTML code for the info we want."""

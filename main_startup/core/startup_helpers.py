@@ -36,27 +36,24 @@ def load_xtra_mod(plugin_name):
 
 def load_plugin(plugin_name, assistant=False):
     """Load PLugins - Assitant & User Using ImportLib"""
-    if plugin_name.endswith("__"):
-        pass
-    else:
-        if plugin_name not in Config.MAIN_NO_LOAD:
-            if assistant:
-                plugin_path = "assistant." + plugin_name
-            else:
-                plugin_path = "plugins." + plugin_name
-            loader_type = "[Assistant]" if assistant else "[User]"
-            importlib.import_module(plugin_path)
-            logging.info(f"{loader_type} - Loaded : " + str(plugin_name))
+    if (
+        not plugin_name.endswith("__")
+        and plugin_name not in Config.MAIN_NO_LOAD
+    ):
+        if assistant:
+            plugin_path = "assistant." + plugin_name
+        else:
+            plugin_path = "plugins." + plugin_name
+        loader_type = "[Assistant]" if assistant else "[User]"
+        importlib.import_module(plugin_path)
+        logging.info(f"{loader_type} - Loaded : " + str(plugin_name))
 
 
 def plugin_collecter(path):
     """Collects All Files In A Path And Give Its Name"""
     if path.startswith("/"):
         path = path[1:]
-    if path.endswith("/"):
-        pathe = path + "*.py"
-    else:
-        pathe = path + "/*.py"
+    pathe = path + "*.py" if path.endswith("/") else path + "/*.py"
     Poppy = glob.glob(pathe)
     final = []
     Pop = Poppy

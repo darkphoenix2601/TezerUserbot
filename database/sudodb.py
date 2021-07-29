@@ -15,7 +15,7 @@ async def add_sudo(user_id):
     cd = await db_y.find_one({"_id": "SUDO_ID"})
     if cd:
         await db_y.update_one({"_id": "SUDO_ID"}, {"$push": {"user_id": int(user_id)}})
-    elif not cd:
+    else:
         user_idc = [int(user_id)]
         await db_y.insert_one({"_id": "SUDO_ID", "user_id": user_idc})
 
@@ -28,10 +28,7 @@ async def is_user_sudo(user_id):
     sm = await db_y.find_one({"_id": "SUDO_ID"})
     if sm:
         kek = list(sm.get("user_id"))
-        if user_id in kek:
-            return True
-        else:
-            return False
+        return user_id in kek
     else:
         return False
 

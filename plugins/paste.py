@@ -34,7 +34,7 @@ async def paste(client, message):
             m_list = open(file, "r").read()
             message_s = m_list
             os.remove(file)
-        elif message.reply_to_message.text:
+        else:
             message_s = message.reply_to_message.text
     url = "https://hastebin.com/documents"
     if not message_s:

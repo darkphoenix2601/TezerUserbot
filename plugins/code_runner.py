@@ -59,10 +59,7 @@ async def eval(client, message):
         evaluation = "Success!"
     EVAL = engine.get_string("EVAL")
     final_output = EVAL.format(cmd, evaluation)
-    if len(cmd) >= 1023:
-        capt = "Eval Result!"
-    else:
-        capt = cmd
+    capt = "Eval Result!" if len(cmd) >= 1023 else cmd
     await edit_or_send_as_file(final_output, stark, client, capt, "eval-result")
 
 

@@ -120,9 +120,7 @@ async def promote_me(client, message):
         return
     lol = client.me
     user_s = await message.chat.get_member(lol.id)
-    if user_s.status in ("creator", "administrator"):
-        pass
-    else:
+    if user_s.status not in ("creator", "administrator"):
         await pablo.edit("`I Don't Have Enough Permissions To Promote!`")
         return
     text_to_return = message.text
@@ -154,9 +152,7 @@ async def demote_you(client, message):
         return
     lol = client.me
     user_s = await message.chat.get_member(lol.id)
-    if user_s.status in ("creator", "administrator"):
-        pass
-    else:
+    if user_s.status not in ("creator", "administrator"):
         await pablo.edit("`I Don't Have Enough Permissions To Demote!`")
         return
     await pablo.edit("`Demoting The User!`")
@@ -310,7 +306,7 @@ async def broadcast(client, message):
     else:
         await lol.edit("`Please Reply Message To Broadcast!`")
         return
-    if msg == None:
+    if msg is None:
         await lol.edit("`Please Reply Message To Broadcast!`")
         return
     s = 0

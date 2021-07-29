@@ -35,11 +35,7 @@ def _check_heroku(func):
     async def heroku_cli(client, message):
         engine = message.Engine
         heroku_app = None
-        if not heroku_client:
-            await edit_or_reply(
-                message, engine.get_string("MISSING_API_KEY").format("HEROKU_API_KEY")
-            )
-        elif not Config.HEROKU_APP_NAME:
+        if not heroku_client or not Config.HEROKU_APP_NAME:
             await edit_or_reply(
                 message, engine.get_string("MISSING_API_KEY").format("HEROKU_API_KEY")
             )
@@ -92,11 +88,11 @@ async def set_varr(client, message, app_):
     msg_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     heroku_var = app_.config()
     _var = get_text(message)
-    syntax = f"{Config.COMMAND_HANDLER}setvar ConfigVarName ConfigVarValue" 
+    syntax = f"{Config.COMMAND_HANDLER}setvar ConfigVarName ConfigVarValue"
     if not _var:
         await msg_.edit(engine.get_string("USAGE").format(syntax))
         return
-    if not " " in _var:
+    if " " not in _var:
         await msg_.edit(engine.get_string("USAGE").format(syntax))
         return
     var_ = _var.split(" ", 1)
@@ -125,7 +121,7 @@ async def del_varr(client, message, app_):
     if not _var:
         await msg_.edit(engine.get_string("INPUT_REQ").format("Var Name"))
         return
-    if not _var in heroku_var:
+    if _var not in heroku_var:
         await msg_.edit(engine.get_string("DE"))
         return
     await msg_.edit(engine.get_string("DLTED_VAR").format(_var))
