@@ -65,9 +65,7 @@ async def fetch_plugins_from_channel():
             Config.PLUGIN_CHANNEL, filter="document", query=".py"
         ):
             hmm = message.document.file_name
-            if os.path.exists(os.path.join("./plugins/", hmm)):
-                pass
-            else:
+            if not os.path.exists(os.path.join("./plugins/", hmm)):
                 await Tezer.download_media(message, file_name="./plugins/")
     except BaseException as e:
         logging.error(f"Failed! To Install Plugins From Plugin Channel Due To {e}!")
@@ -96,7 +94,7 @@ async def run_bot():
     Tezer.selected_lang = await check_lang()
     LangEngine = Engine()
     LangEngine.load_language()
-    Tezer.has_a_bot = True if bot else False
+    Tezer.has_a_bot = bool(bot)
     if Tezer2:
         await Tezer2.start()
         Tezer2.me = await Tezer2.get_me()
@@ -104,11 +102,11 @@ async def run_bot():
     if Tezer3:
         await Tezer3.start()
         Tezer3.me = await Tezer3.get_me()
-        Tezer3.has_a_bot = True if bot else False
+        Tezer3.has_a_bot = bool(bot)
     if Tezer4:
         await Tezer4.start()
         Tezer4.me = await Tezer4.get_me()
-        Tezer4.has_a_bot = True if bot else False
+        Tezer4.has_a_bot = bool(bot)
     if Config.PLUGIN_CHANNEL:
         await fetch_plugins_from_channel()
     needed_mods = plugin_collecter("./plugins/")
